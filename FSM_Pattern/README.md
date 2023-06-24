@@ -2,7 +2,7 @@
 Design_Pattern programs for C++
 
 
- 1. FINITE STATE MACHINE PATTERN 
+ 1. FINITE STATE MACHINE PATTERN (Refer FSM_Problem.docx)
     - Normally state based behaviours can write using state transistions using switch cases.
     - or we can use current to next state map using state table(map or 2D array)
     - However if more state gets added at later stage, or any exit or entry functions to get executed on every state will get complicate if we go with above approach.
