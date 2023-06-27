@@ -1,25 +1,26 @@
 #include <iostream>
-#include "CoinMachineState.h"
+#include "CoinMachine.h"
 
 using namespace coinMachine;
 
-/* static variable initialization*/
+/********* static variable initialization ***********/
 CLockedState* CLockedState::lockedStateObj = 0;
 CUnlockedState* CUnlockedState::unlockedStateObj = 0;
 CBrokenState* CBrokenState::brokenStateObj = 0;
-
 bool IMachineState::isInitialised = false;
 eMachineWorkingStatus IMachineState::workingStatus = STATUS_MACHINE_INVALID;
 eMachineGateStatus IMachineState::gateStatus = STATUS_GATE_INVALID;
 
 /****** COIN MACHINE *****/
 
+//constructor of CCoinMachine
 CCoinMachine::CCoinMachine()
 {
     machineState = CLockedState::getLockedStateObj(); //default state
     machineState->initVariables();
 }
 
+//Chane or set the new state
 void CCoinMachine::setState(IMachineState* newState)
 {
     machineState->exitState(this);//exit functionalities called for old state
@@ -27,6 +28,7 @@ void CCoinMachine::setState(IMachineState* newState)
     machineState->enterState(this); //enter functionlities called for new state
 }
 
+//when user placed the coin
 void CCoinMachine::placeCoin()
 {
     machineState->coinDetected(this);
@@ -34,6 +36,7 @@ void CCoinMachine::placeCoin()
 
 /***** INTERFACE STATE CLASS **********/
 
+//open the gate
 bool IMachineState::openGate()
 {
     bool retStaus = false;
@@ -46,6 +49,7 @@ bool IMachineState::openGate()
     return retStaus;
 }
 
+//close the gate
 bool IMachineState::closeGate()
 {
     bool retStaus = false;
@@ -61,7 +65,7 @@ bool IMachineState::closeGate()
 
 /***** LOCKED STATE CLASS **********/
 
-//get object
+//get singleton object
 IMachineState* CLockedState::getLockedStateObj()
 {
     if (0 == lockedStateObj)
@@ -84,18 +88,18 @@ void CLockedState::enterState(CCoinMachine* machine)
 {
     if (!isMachineInWorkingStatus())
     {
-        machineFailed(machine);
+        machineFailed(machine); //if the machine failed
     }
     else
     {
-        setGateStatus(STATUS_GATE_CLOSED);
+        setGateStatus(STATUS_GATE_CLOSED); //close the gate
     }
 }
 
 //functionality when exit from locked state
 void CLockedState::exitState(CCoinMachine* machine)
 {
-
+    //no avtion
 }
 
 //person passing whilst in locked state
@@ -116,7 +120,7 @@ void CLockedState::machineFailed(CCoinMachine* machine)
 //COin detected in unlocked state
 void CUnlockedState::coinDetected(CCoinMachine* machine)
 {
-    cout << "CUnlockedState::coin detected no action as already in unlocked state" << endl;
+    printThankYou();// when coin detected in unlocked state, print thank you
 }
 
 //If machine in failed state
@@ -137,12 +141,12 @@ void CUnlockedState::personPassed(CCoinMachine* machine)
 void CUnlockedState::enterState(CCoinMachine* machine)
 {
     cout << "CUnlockedState:: Entered to unlock state" << endl;
-    if (openGate())
+    if (openGate()) //if the gate opens, allow the person to pass
     {
-        personPassed(machine);
+        personPassed(machine); 
     }
     else
-    {
+    {   //if gate doesn't open
         machineFailed(machine);
     }
 
@@ -153,6 +157,7 @@ void CUnlockedState::exitState(CCoinMachine* machine)
 {
     if (isMachineInWorkingStatus())
     {
+        //if the machine in working state , close the gate and print than you
         closeGate();
         printThankYou();
     }
@@ -193,5 +198,5 @@ void CBrokenState::machineFixed(CCoinMachine* machine)
 void CBrokenState::enterState(CCoinMachine* machine)
 {
     printErrorMsg();
-    machineFixed(machine);
+    machineFixed(machine); //Testing purpose added here
 }
