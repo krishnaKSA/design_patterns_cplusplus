@@ -1,5 +1,5 @@
 #include <iostream>
-#include "CoinMachine.h"
+#include "CoinMachine.hpp"
 
 using namespace coinMachine;
 
