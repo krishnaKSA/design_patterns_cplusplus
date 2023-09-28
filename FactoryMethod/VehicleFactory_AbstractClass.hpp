@@ -68,34 +68,34 @@ namespace facoryMethodAbstractClass
         virtual IVehicle* createProduct(eVehicleType type) = 0;
     };
 
-    //Sub creator class
-    class CVehicleFactory : public IVehicleFactory
-    {
-    public:
+	//Sub creator class
+	class CVehicleFactory : public IVehicleFactory
+	{
+	public:
 
-        //Factory method to create instance
-        IVehicle* createProduct(eVehicleType type) override
-        {
-            IVehicle* vehicle = nullptr;
-            if (type == eSedan)
-            {
-                vehicle = new CSedan();
-            }
-            else if (type == eXUV)
-            {
-                vehicle = new CXUV();
-            }
-            else if (type == eElectricCar)
-            {
-                vehicle = new CElectricCar();
-            }
-            else {
-                //return nullptr
-            }
+		//Factory method to create instance
+		IVehicle* createProduct(eVehicleType type) override
+		{
+			IVehicle* vehicle = nullptr;
+			if (type == eSedan)
+			{
+				vehicle = new CSedan();
+			}
+			else if (type == eXUV)
+			{
+				vehicle = new CXUV();
+			}
+			else if (type == eElectricCar)
+			{
+				vehicle = new CElectricCar();
+			}
+			else {
+				//return nullptr
+			}
 
-            return vehicle;
-        }
-    };
+			return vehicle;
+		}
+	};
 
     class CClient
     {

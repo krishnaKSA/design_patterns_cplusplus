@@ -10,6 +10,7 @@
             "${workspaceFolder}\\FSM_Pattern\\**.cpp",
             "${workspaceFolder}\\FSM_Pattern\\**.hpp",
             "${workspaceFolder}\\FactoryMethod\\**.hpp",
+            "${workspaceFolder}\\DecoratorPattern\\**.hpp",
             "-o",
             "${fileDirname}\\${fileBasenameNoExtension}.exe"
           ],
